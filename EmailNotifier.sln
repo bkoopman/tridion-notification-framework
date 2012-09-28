@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotifier", "EmailNotif
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tridion.Notification.Framework.Contracts", "Tridion.Notification.Framework.Contracts\Tridion.Notification.Framework.Contracts.csproj", "{773E8DEA-DE86-4554-BEBD-8D4C0C2C19FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterNotifier.cs", "TwitterNotifier.cs\TwitterNotifier.cs.csproj", "{666C3684-65AA-4B18-9023-5A0FD2998B17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterNotifier", "TwitterNotifier.cs\TwitterNotifier.csproj", "{666C3684-65AA-4B18-9023-5A0FD2998B17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

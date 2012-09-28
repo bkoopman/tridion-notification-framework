@@ -7,10 +7,11 @@
     <ProjectGuid>{666C3684-65AA-4B18-9023-5A0FD2998B17}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwitterNotifier.cs</RootNamespace>
-    <AssemblyName>TwitterNotifier.cs</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>TridionCommunity.NotificationFramawork</RootNamespace>
+    <AssemblyName>TwitterNotifier</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
