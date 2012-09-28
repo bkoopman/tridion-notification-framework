@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TridionCommunity.NotificationFramework
 {
-    public class TwitterNotifier: INotifier
+    public class TwitterNotifier : INotifier
     {
-//        function tweet([string] $status) {
-//   #http://blogs.msdn.com/shitals/archive/2008/12/27/9254245.aspx
-//  [System.Net.ServicePointManager]::Expect100Continue = $false
-//  try {
-//    $wc = new-object System.Net.WebClient
-//    $wc.BaseAddress = "http://twitter.com"
-//    $wc.Credentials = new-object System.Net.NetworkCredential
-//    $wc.Credentials.UserName = "Your account name"
-//    $wc.Credentials.Password = "password"
-//    $stream = $wc.OpenWrite("statuses/update.xml")
-//    $writer = new-object System.IO.StreamWriter -ArgumentList $stream
-//    $writer.Write("status=" + $status) 
-//  }
-//  finally {
-//    $writer.Dispose()
-//    $stream.Dispose()
-//    $wc.Dispose()
-//  }
-//}
+        private string twitterUser = "TridionNotifications";
+        private string twitterPassword = "PIqQywvnseNcbR8nmqKR";
+
+        public void Tweet(string user, string status)
+        {
+            ServicePointManager.Expect100Continue = false;
+            using (var webClient = new WebClient())
+            {
+                webClient.BaseAddress = "http://twitter.com";
+                var credentials = new System.Net.NetworkCredential();
+                credentials.UserName = this.twitterUser;
+                credentials.Password = this.twitterPassword;
+                webClient.Credentials = credentials;
+                using (var stream = webClient.OpenWrite("statuses/update.xml"))
+                {
+                    var writer = new System.IO.StreamWriter(stream);
+                    writer.Write("status=" + status);
+                }
+            }
+        }
     }
+
 }
+
+
