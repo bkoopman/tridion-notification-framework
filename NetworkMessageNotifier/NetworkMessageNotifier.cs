@@ -1,10 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
+using NetworkMessageNotifier;
 
 namespace TridionCommunity.NotificationFramework
 {
     public class NetworkMessageNotifier : INotifier
     {
+        public void Notify(NotificationData data)
+        {
+            var notificationData = data as WorkflowNotificationData;
+            if (notificationData == null) return;
+
+            var userName = notificationData.User.Title;
+            var message = string.Format(Resources.NotificationMessage, notificationData.WorkItems.Length);
+            SendMessage(userName, message);
+        }
+
         public void SendMessage(string userName, string message)
         {
             var process = new Process
@@ -22,13 +33,8 @@ namespace TridionCommunity.NotificationFramework
 
             if (process.ExitCode != 0)
             {
-                throw new Exception(string.Format("Failed to notify the user '{0}'. Exit code was {1}.", userName, process.ExitCode));
+                throw new Exception(string.Format(Resources.FailedToSendMessage, userName, process.ExitCode));
             }
-        }
-
-        public void Notify(NotificationData data)
-        {
-            throw new NotImplementedException();
         }
     }
 }
