@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TwitterNotifierTests
+namespace TridionCommunity.NotificationFramework.Tests
 {
     [TestClass]
     public class TwitterNotifierTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestTweet()
         {
+            var target = new TwitterNotifier();
+            target.Tweet("DominicCronin", "This is a test");
+
         }
     }
 }

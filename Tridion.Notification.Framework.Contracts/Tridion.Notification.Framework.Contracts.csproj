@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="INotificationMessage.cs" />
     <Compile Include="INotifier.cs" />
+    <Compile Include="NotificationFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
