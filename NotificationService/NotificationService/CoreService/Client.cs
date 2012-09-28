@@ -6,10 +6,10 @@ namespace NotificationService.CoreService
 {
     public class Client
     {
-        public static SessionAwareCoreServiceClient GetCoreService()
+        public static SessionAwareCoreServiceClient GetCoreService(string username)
         {
             var result = new SessionAwareCoreServiceClient();
-            result.Impersonate("HOW WILL WE GET THE USER NAME");
+            result.Impersonate(username);
             return result;
         }
     }
