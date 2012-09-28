@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TridionCommunity.NotificationFramework;
 
 namespace NetworkMessageNotifierTests
 {
@@ -10,14 +9,14 @@ namespace NetworkMessageNotifierTests
         [TestMethod]
         public void SendMessageSuccess()
         {
-            var notifier = new NetworkMessageNotifier();
+            var notifier = new TridionCommunity.NotificationFramework.NetworkMessageNotifier();
             notifier.SendMessage(Environment.UserName, "This is a test from the unit test!");
         }
 
         [TestMethod]
         public void SendMessageFailure()
         {
-            var notifier = new NetworkMessageNotifier();
+            var notifier = new TridionCommunity.NotificationFramework.NetworkMessageNotifier();
             const string userName = "NonExistingUser";
             const string message = "This is a test from the unit test!";
 
