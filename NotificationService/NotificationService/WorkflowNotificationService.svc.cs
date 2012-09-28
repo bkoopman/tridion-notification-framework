@@ -15,40 +15,49 @@ namespace NotificationService
     {
         public void DoWork()
         {
-            var client = Client.GetCoreService();
+            // get a corservice client
+            var client = Client.GetCoreService("CURRENT USER");
 
-            ApplicationData[] appDataList = client.ReadAllApplicationData("SUBJECT ID");
-            
-            //get list of workflow users from the app data
+            var users = client.GetSystemWideList(new UsersFilterData { BaseColumns = ListBaseColumns.IdAndTitle, IsPredefined = false });
+            var userIds = users.Select(f => f.Id).Distinct().ToArray();
+            var applicationDatas = client.ReadApplicationDataForSubjectsIds(userIds, new[] { "test" }).Where(a => a.Value.Length > 0);
 
-            // for each user:
-
-            UserData currentUser = (UserData)client.Read("USER ID", new ReadOptions());
-
-            // get the workflow items for the user
-            UserWorkItemsFilterData userWorkItemsFilter = new UserWorkItemsFilterData();
-            userWorkItemsFilter.ActivityState = ActivityState.Started | ActivityState.Assigned;
-
-            // get assignemnt and work list
-            IdentifiableObjectData[] workFlowItems = client.GetSystemWideList(userWorkItemsFilter);
+            foreach (var applicationDataElement in applicationDatas)
+            {
+                if (true)
+                {
+                    client.Impersonate(users.Single(u => u.Id == applicationDataElement.Key).Title);
 
 
-            DateTime fakeDate = DateTime.Now;
+                    // get the workflow items for the user
+                    UserWorkItemsFilterData userWorkItemsFilter = new UserWorkItemsFilterData();
+                    userWorkItemsFilter.ActivityState = ActivityState.Started | ActivityState.Assigned;
 
-            // then if there is a taks
-            foreach (WorkItemData workItem in workFlowItems)
-            {
-                if (fakeDate < workItem.VersionInfo.CreationDate)
-                {
-                    t
-                    // add to list of things to push
-                    // hand that list, appdata, user ide, user desc & name to the notifier
-                    Console.WriteLine(currentUser.Id + currentUser.Description + "APPDATA");
-                }
+                    // get assignemnt and work list
+                    IdentifiableObjectData[] workFlowItems = client.GetSystemWideList(userWorkItemsFilter);
 
-            }
-            
+                    // Read
+                    DateTime fakeDate = DateTime.Now;
 
+                    IList<WorkItemData> relevantWorkFlowDataItems = new List<WorkItemData>();
+
+                    // then if there is a taks
+                    foreach (WorkItemData workItem in workFlowItems)
+                    {
+                        if (fakeDate < workItem.VersionInfo.CreationDate)
+                        {
+                            relevantWorkFlowDataItems.Add(workItem);
+                            // add to list of things to push
+                            // hand that list, appdata, user ide, user desc & name to the notifier
+                        }
+
+                    }
+
+                    // push these buggers :)
+
+
+                }
+            }
 
         }
     }
