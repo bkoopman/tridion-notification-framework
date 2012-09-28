@@ -12,3 +12,4 @@ C:\Users\Administrator\Documents\tridion-notification-framework\tridion-notifica
 C:\Users\Administrator\Documents\tridion-notification-framework\tridion-notification-framework\EmailNotifier\obj\Debug\EmailNotifier.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\tridion-notification-framework\tridion-notification-framework\EmailNotifier\obj\Debug\EmailNotifier.dll
 C:\Users\Administrator\Documents\tridion-notification-framework\tridion-notification-framework\EmailNotifier\obj\Debug\EmailNotifier.pdb
+C:\dev\EmailNotifier\EmailNotifier\bin\Debug\Tridion.ContentManager.CoreService.Client.dll

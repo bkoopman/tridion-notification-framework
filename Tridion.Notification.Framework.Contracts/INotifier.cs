@@ -7,6 +7,7 @@ namespace TridionCommunity.NotificationFramework
 {
     public interface INotifier
     {
-        void Notify(INotificationMessage message);
+        //void Notify(INotificationMessage message);
+             
     }
 }
