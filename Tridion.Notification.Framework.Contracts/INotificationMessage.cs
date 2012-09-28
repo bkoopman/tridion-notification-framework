@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Tridion.Notification.Framework.Contracts
+namespace TridionCommunity.NotificationFramework
 {
     public interface INotificationMessage
     {
