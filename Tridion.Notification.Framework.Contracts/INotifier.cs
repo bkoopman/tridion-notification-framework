@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TridionCommunity.NotificationFramework
+﻿namespace TridionCommunity.NotificationFramework
 {
     public interface INotifier
     {
-        //void Notify(INotificationMessage message);
-             
+        void Notify(NotificationData data);
     }
 }
