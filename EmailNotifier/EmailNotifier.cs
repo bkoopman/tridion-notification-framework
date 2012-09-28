@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net.Mail;
 
-namespace EmailNotifier
+namespace TridionCommunity.NotificationFramework
 {
     public class EmailNotifier : INotifier
     {
