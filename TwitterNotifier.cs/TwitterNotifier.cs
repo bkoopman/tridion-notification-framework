@@ -28,6 +28,11 @@ namespace TridionCommunity.NotificationFramework
             }
             throw new NotificationFailedException(string.Format("Twitter response was not Success: {0}", tweetResponse.Content));
         }
+
+        public void Notify(NotificationData data)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

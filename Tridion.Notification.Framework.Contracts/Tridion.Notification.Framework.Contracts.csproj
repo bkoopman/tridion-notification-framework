@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="INotificationMessage.cs" />
     <Compile Include="INotifier.cs" />
+    <Compile Include="NotificationData.cs" />
     <Compile Include="NotificationFailedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

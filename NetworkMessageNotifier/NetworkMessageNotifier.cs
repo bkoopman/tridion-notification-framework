@@ -25,5 +25,10 @@ namespace TridionCommunity.NotificationFramework
                 throw new Exception(string.Format("Failed to notify the user '{0}'. Exit code was {1}.", userName, process.ExitCode));
             }
         }
+
+        public void Notify(NotificationData data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

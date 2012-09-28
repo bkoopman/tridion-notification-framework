@@ -8,18 +8,6 @@ namespace TridionCommunity.NotificationFramework
 {
     public class EmailNotifier : INotifier
     {
-
-        public EmailNotifier()
-        {
-            SendMail();
-        }
-
-        public EmailNotifier(INotificationMessage message)
-        {
-            
-
-        }
-
         private void SendMail()
         {
             using (MailMessage mail = new MailMessage("workflowmailer@mycompany.com", "user@address.com"))
@@ -33,9 +21,10 @@ namespace TridionCommunity.NotificationFramework
                 }
             }
         }
-       
-       
-    
-
+        
+        public void Notify(NotificationData data)
+        {
+            SendMail();
+        }
     }
 }
