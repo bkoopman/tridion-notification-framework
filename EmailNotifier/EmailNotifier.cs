@@ -3,25 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace TridionCommunity.NotificationFramework
 {
     public class EmailNotifier : INotifier
     {
-
-        public EmailNotifier()
+        public void Notify(INotificationMessage message)
         {
-            SendMail();
+            ThreadPool.QueueUserWorkItem(sendMail => SendMail(message));
         }
-
-        public EmailNotifier(INotificationMessage message)
+       
+        private void SendMail(INotificationMessage message)
         {
-            
 
-        }
-
-        private void SendMail()
-        {
             using (MailMessage mail = new MailMessage("workflowmailer@mycompany.com", "user@address.com"))
             {
                 mail.Subject = "Your notifications";
@@ -29,13 +25,22 @@ namespace TridionCommunity.NotificationFramework
 
                 using (SmtpClient smtp = new SmtpClient())
                 {
-                    smtp.Send(mail);
+                    try
+                    {
+                        smtp.Send(mail);
+                    }
+                    catch (ArgumentNullException e)
+                    {
+                        throw;
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                    }
+                    catch (SmtpException e)
+                    {
+                    }                                        
                 }
             }
         }
-       
-       
-    
-
     }
 }
