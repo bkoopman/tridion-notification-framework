@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{13840FD4-7282-4864-AE6C-AE49813F5A74}</ProjectGuid>
+    <ProjectGuid>{BD88C46D-03C5-443D-85E0-5FFEA675A570}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TridionCommunity.NotificationFramework</RootNamespace>
-    <AssemblyName>EmailNotifier</AssemblyName>
+    <RootNamespace>NetworkMessageNotifier</RootNamespace>
+    <AssemblyName>NetworkMessageNotifier</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmailNotifier.cs" />
+    <Compile Include="NetworkMessageNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

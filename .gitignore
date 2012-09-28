@@ -1,8 +1,8 @@
-bin
-/Tridion.Notification.Framework.Contracts/obj
-obj
-/*.suo
-bin
-obj
-bin
-bin
+bin/
+obj/
+*.suo
+*.testsettings
+*.vsmdi
+*.dll
+*.pdb
+*.FileListAbsolute.txt

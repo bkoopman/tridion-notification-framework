@@ -1,7 +1,0 @@
-C:\dev\EmailNotifier\EmailNotifier\obj\Debug\ResolveAssemblyReference.cache
-C:\dev\EmailNotifier\EmailNotifier\bin\Debug\EmailNotifier.dll
-C:\dev\EmailNotifier\EmailNotifier\bin\Debug\EmailNotifier.pdb
-C:\dev\EmailNotifier\EmailNotifier\obj\Debug\EmailNotifier.dll
-C:\dev\EmailNotifier\EmailNotifier\obj\Debug\EmailNotifier.pdb
-C:\dev\EmailNotifier\EmailNotifier\bin\Debug\Tridion.Notification.Framework.Contracts.dll
-C:\dev\EmailNotifier\EmailNotifier\bin\Debug\Tridion.Notification.Framework.Contracts.pdb

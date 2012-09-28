@@ -7,7 +7,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tridion.Notification.Framew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterNotifier", "TwitterNotifier.cs\TwitterNotifier.csproj", "{666C3684-65AA-4B18-9023-5A0FD2998B17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkMessageNotifier", "NetworkMessageNotifier\NetworkMessageNotifier.csproj", "{BD88C46D-03C5-443D-85E0-5FFEA675A570}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterNotifierTests", "TwitterNotifierTests\TwitterNotifierTests.csproj", "{7EA556E7-D012-481A-8623-A80EA6A0AAAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{791D108E-6320-469B-858B-49A0DD9D45AD}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Notification Framework.vsmdi = Notification Framework.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Notification Framework.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -25,6 +39,14 @@ Global
 		{666C3684-65AA-4B18-9023-5A0FD2998B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666C3684-65AA-4B18-9023-5A0FD2998B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{666C3684-65AA-4B18-9023-5A0FD2998B17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD88C46D-03C5-443D-85E0-5FFEA675A570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD88C46D-03C5-443D-85E0-5FFEA675A570}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD88C46D-03C5-443D-85E0-5FFEA675A570}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD88C46D-03C5-443D-85E0-5FFEA675A570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA556E7-D012-481A-8623-A80EA6A0AAAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA556E7-D012-481A-8623-A80EA6A0AAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA556E7-D012-481A-8623-A80EA6A0AAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA556E7-D012-481A-8623-A80EA6A0AAAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
