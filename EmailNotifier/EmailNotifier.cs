@@ -18,12 +18,14 @@ namespace TridionCommunity.NotificationFramework
     {
         private static string xslt = null;
 
-        //public void Notify(INotificationMessage message)
-        //{
-        //    ThreadPool.QueueUserWorkItem(sendMail => SendMail(message));
-        //}
+        public void Notify(NotificationData data)
+        {
+            var workflowData = (WorkflowNotificationData)data;
 
-        public void Notify(UserData userData, WorkItemData[] workItemData)
+            Notify(workflowData.User, workflowData.WorkItems);
+        }
+
+        private void Notify(UserData userData, WorkItemData[] workItemData)
         {
 
             XmlWriterSettings settings = new XmlWriterSettings()
@@ -71,18 +73,21 @@ namespace TridionCommunity.NotificationFramework
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
             myXslTrans.Load(xslt);
             XmlTextWriter myWriter = new XmlTextWriter("result.html", null);
-            myXslTrans.Transform(myXPathDoc, null, myWriter);
+            StringWriter sr = new StringWriter();
+            myXslTrans.Transform(myXPathDoc, null, sr);
+            //myXslTrans.Transform(myXPathDoc, null, myWriter);
 
+            SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
 
         }
-       
-        private void SendMail(INotificationMessage message)
+
+        private void SendMail(string mailTo, string mailFrom, string subject, string mailMessage)
         {
 
-            using (MailMessage mail = new MailMessage("workflowmailer@mycompany.com", "user@address.com"))
+            using (MailMessage mail = new MailMessage(mailFrom, mailTo))
             {
-                mail.Subject = "Your notifications";
-                mail.Body = "Stuff waiting for you";
+                mail.Subject = subject;
+                mail.Body = mailMessage;
 
                 using (SmtpClient smtp = new SmtpClient())
                 {
@@ -99,9 +104,11 @@ namespace TridionCommunity.NotificationFramework
                     }
                     catch (SmtpException e)
                     {
-                    }                                        
+                    }
                 }
             }
         }
+
+        
     }
 }
