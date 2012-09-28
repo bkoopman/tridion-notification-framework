@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Mail;
+using Tridion.Notification.Framework.Contracts;
 
 namespace EmailNotifier
 {
@@ -12,6 +13,12 @@ namespace EmailNotifier
         public EmailNotifier()
         {
             SendMail();
+        }
+
+        public EmailNotifier(INotificationMessage message)
+        {
+            
+
         }
 
         private void SendMail()

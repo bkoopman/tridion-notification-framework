@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Tridion.Notification.Framework.Contracts
 {
-    public class INotificationMessage
+    public interface INotificationMessage
     {
-        public string AppData { get; }
+        string AppData { get; }
     }
 }
