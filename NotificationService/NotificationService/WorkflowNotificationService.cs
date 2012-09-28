@@ -18,6 +18,7 @@ namespace NotificationService
 
         protected override void OnStart(string[] args)
         {
+            Worker.DoWork();
         }
 
         protected override void OnStop()
