@@ -36,6 +36,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,10 +47,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="Tridion.ContentManager.CoreService.Client">
       <HintPath>..\..\..\..\Program Files (x86)\Tridion\bin\client\Tridion.ContentManager.CoreService.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreService\Client.cs" />
+    <Compile Include="Worker.cs" />
     <Compile Include="WorkflowNotificationService.cs">
       <SubType>Component</SubType>
     </Compile>
