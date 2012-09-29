@@ -10,7 +10,7 @@ namespace NotificationService.CoreService
     {
         public static SessionAwareCoreServiceClient GetCoreService()
         {
-            var result = new SessionAwareCoreServiceClient("wsHttp_2011");
+            var result = GetNewClient<SessionAwareCoreServiceClient>();
 
 
             result.Impersonate(ConfigurationManager.AppSettings.Get("adminUser"));
