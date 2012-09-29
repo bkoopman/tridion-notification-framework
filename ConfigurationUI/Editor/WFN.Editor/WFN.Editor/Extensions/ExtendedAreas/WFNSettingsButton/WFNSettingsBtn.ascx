@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="Tridion.Extensions.UI.WFN.CME.WFNSettingsButton" %>
+<c:Button runat="server" Id="WFNSettingsBtn" IsToggle="true" Label="WFN Settings" Title="WFN Settings" CommandName="DoSomething"/>

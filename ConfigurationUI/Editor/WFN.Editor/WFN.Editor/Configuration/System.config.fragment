@@ -1,0 +1,15 @@
+<!-- Editor Fragment -->
+<editor name="Mashups" xmlns="http://www.sdltridion.com/2009/GUI/Configuration">
+  <installpath xmlns="http://www.sdltridion.com/2009/GUI/Configuration">PATH TO EDITOR (UI.Editor)</installpath>
+  <configuration xmlns="http://www.sdltridion.com/2009/GUI/Configuration">Configuration\editor.config</configuration>
+  <vdir xmlns="http://www.sdltridion.com/2009/GUI/Configuration">Mashups</vdir>
+</editor>
+<!-- End Editor Fragment -->
+
+<!-- Model Fragment -->
+<model name="Mashups" xmlns="http://www.sdltridion.com/2009/GUI/Configuration">
+  <installpath xmlns="http://www.sdltridion.com/2009/GUI/Configuration">PATH TO MODEL (UI.Model)</installpath>
+  <configuration xmlns="http://www.sdltridion.com/2009/GUI/Configuration">Configuration\model.config</configuration>
+  <vdir xmlns="http://www.sdltridion.com/2009/GUI/Configuration">Mashups</vdir>
+</model>
+<!-- End Model Fragment -->

@@ -1,0 +1,9 @@
+﻿#SettingsButtons
+{
+     width: 100% !important;
+}
+
+#WFNSettingsBtn .text
+{    
+    background-image: url(/WebUI/Editors/WFN/Styles/WFN/Icons/WFNDashboard32x32.png);
+}

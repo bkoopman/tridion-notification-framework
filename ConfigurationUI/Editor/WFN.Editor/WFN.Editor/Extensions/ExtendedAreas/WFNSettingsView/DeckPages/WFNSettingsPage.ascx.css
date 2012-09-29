@@ -1,0 +1,32 @@
+﻿.backstage #OptionsPanel #WFNSettingsPage.page {
+    padding: 0;
+}
+
+.widget
+{
+	background-color: #EEEFF2;
+	background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0.38, rgb(238,239,242)), color-stop(0.85, rgb(255,255,255)) );
+	background-image: -moz-linear-gradient( center bottom, rgb(238,239,242) 38%, rgb(255,255,255) 85% );
+	-pie-background: linear-gradient(rgb(255,255,255), rgb(238,239,242));
+/*	behavior: url({ThemePath[OnlineMarketing]}External/PIE.htc); */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#EEEFF2',GradientType=0 ); /* IE6-8 */
+}
+
+/*.ie7 .widget
+{
+	background-color: #FFFFFF;
+	behavior:url();
+}
+*/
+
+/*.ie7 #OverallStatisticsWidget
+{
+	background-color: #EEEFF2;
+	behavior:url();
+}
+*/
+
+.ie7 #WFNDetailsWidgetsView
+{
+	margin-bottom:70px;
+}
