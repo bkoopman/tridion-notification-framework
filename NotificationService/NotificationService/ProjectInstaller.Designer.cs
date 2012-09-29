@@ -39,7 +39,9 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "WorkflowNotificationService";
+            this.serviceInstaller1.Description = "Workflow Notification Service";
+            this.serviceInstaller1.ServiceName = "Workflow Notification Service";
+            this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
