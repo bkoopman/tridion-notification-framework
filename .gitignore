@@ -1,8 +1,8 @@
 bin/
 obj/
+TestResults/
 *.suo
 *.testsettings
 *.vsmdi
 *.dll
 *.pdb
-*.FileListAbsolute.txt

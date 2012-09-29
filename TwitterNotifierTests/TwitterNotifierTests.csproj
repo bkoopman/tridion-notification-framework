@@ -48,6 +48,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwitterNotifierTests.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tridion.Notification.Framework.Contracts\Tridion.Notification.Framework.Contracts.csproj">
+      <Project>{773e8dea-de86-4554-bebd-8d4c0c2c19fc}</Project>
+      <Name>Tridion.Notification.Framework.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterNotifier.cs\TwitterNotifier.csproj">
+      <Project>{666c3684-65aa-4b18-9023-5a0fd2998b17}</Project>
+      <Name>TwitterNotifier</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
