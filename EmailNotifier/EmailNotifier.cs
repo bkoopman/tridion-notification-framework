@@ -20,9 +20,11 @@ namespace TridionCommunity.NotificationFramework
 
         public void Notify(NotificationData data)
         {
-            var workflowData = (WorkflowNotificationData)data;
-
-            Notify(workflowData.User, workflowData.WorkItems);
+            var workflowData = data as WorkflowNotificationData;
+            if (workflowData != null)
+            {
+                Notify(workflowData.User, workflowData.WorkItems);
+            }
         }
 
         private void Notify(UserData userData, WorkItemData[] workItemData)
@@ -30,7 +32,7 @@ namespace TridionCommunity.NotificationFramework
 
             XmlWriterSettings settings = new XmlWriterSettings()
             {
-                Encoding = new UnicodeEncoding(false, false), // no BOM in a .NET string
+                Encoding = Encoding.UTF8, 
                 Indent = false,
                 OmitXmlDeclaration = false
             };
@@ -72,13 +74,16 @@ namespace TridionCommunity.NotificationFramework
             XPathDocument myXPathDoc = new XPathDocument(xml);
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
             myXslTrans.Load(xslt);
-            XmlTextWriter myWriter = new XmlTextWriter("result.html", null);
-            StringWriter sr = new StringWriter();
-            myXslTrans.Transform(myXPathDoc, null, sr);
-            //myXslTrans.Transform(myXPathDoc, null, myWriter);
-
-            SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
-
+            using (XmlTextWriter myWriter = new XmlTextWriter("result.html", null))
+            {
+                using (StringWriter sr = new StringWriter())
+                {
+                    //Write the mailbody to the StringWriter
+                    myXslTrans.Transform(myXPathDoc, null, sr);
+                    
+                    SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
+                }
+            }           
         }
 
         private void SendMail(string mailTo, string mailFrom, string subject, string mailMessage)
@@ -96,8 +101,7 @@ namespace TridionCommunity.NotificationFramework
                         smtp.Send(mail);
                     }
                     catch (ArgumentNullException e)
-                    {
-                        throw;
+                    {                        
                     }
                     catch (InvalidOperationException e)
                     {
