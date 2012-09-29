@@ -42,8 +42,7 @@ namespace NotificationService
         }
 
         public static void SetLogLevel()
-        {
-            Logger.WriteToLog(ConfigurationManager.AppSettings.Get("logLevel").ToUpper(), EventLogEntryType.Error);
+        {            
             switch (ConfigurationManager.AppSettings.Get("logLevel").ToUpper())
             {                    
                 case "INFO":

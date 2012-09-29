@@ -22,6 +22,7 @@ namespace NotificationService
         protected override void OnStart(string[] args)
         {
             Logger.SetLogLevel();
+
             // To be able to start stervice without waiting
             BackgroundWorker bw = new BackgroundWorker();
             bw.DoWork += bw_DoWork;
@@ -34,13 +35,18 @@ namespace NotificationService
         
         void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            try
+            while (true)
             {
-                Worker.DoWork();                
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteToLog(ex.Message, EventLogEntryType.Error);
+                try
+                {
+                    Worker.DoWork();
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteToLog(ex.Message, EventLogEntryType.Error);
+                }
+                Logger.WriteToLog("Polled", EventLogEntryType.Information);
+                Thread.Sleep(Convert.ToInt16(ConfigurationManager.AppSettings.Get("pollingInterval")) * 1000);
             }
         }
 
