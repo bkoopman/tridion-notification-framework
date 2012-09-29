@@ -73,7 +73,7 @@ namespace TridionCommunity.NotificationFramework
             //Transform
             XPathDocument myXPathDoc = new XPathDocument(xml);
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
-            myXslTrans.Load(xslt);
+            myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));
             using (XmlTextWriter myWriter = new XmlTextWriter("result.html", null))
             {
                 using (StringWriter sr = new StringWriter())
@@ -101,13 +101,16 @@ namespace TridionCommunity.NotificationFramework
                         smtp.Send(mail);
                     }
                     catch (ArgumentNullException e)
-                    {                        
+                    {
+                        throw new NotificationFailedException(TridionCommunity.NotificationFramework.Properties.Resources.FailedToSendMailMessage, e);
                     }
                     catch (InvalidOperationException e)
                     {
+                        throw new NotificationFailedException(TridionCommunity.NotificationFramework.Properties.Resources.FailedToSendMailMessage, e);
                     }
                     catch (SmtpException e)
                     {
+                        throw new NotificationFailedException(TridionCommunity.NotificationFramework.Properties.Resources.FailedToSendMailMessage, e);
                     }
                 }
             }
