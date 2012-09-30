@@ -41,6 +41,12 @@ namespace NotificationService
                      Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Notifiers");
         }
 
+        public static List<INotifier> GetAll(bool force)
+        {
+            _loaded = false;
+            return GetAll();
+        }
+
         public static List<INotifier> GetAll()
         {
             if (!_loaded) Load();

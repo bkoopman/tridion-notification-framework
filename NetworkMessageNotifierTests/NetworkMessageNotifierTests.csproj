@@ -9,8 +9,8 @@
     <ProjectGuid>{BA598BC6-5473-4925-972F-F0E22A9C05F4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NetworkMessageNotifieTests</RootNamespace>
-    <AssemblyName>NetworkMessageNotifieTests</AssemblyName>
+    <RootNamespace>NetworkMessageNotifierTests</RootNamespace>
+    <AssemblyName>NetworkMessageNotifierTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
