@@ -13,7 +13,7 @@ namespace TridionCommunity.NotificationFramework.Tests
         public void TestTweet()
         {
             var target = new TwitterNotifier();
-            target.Tweet("DominicCronin", "This is a test");
+            target.Tweet("DominicCronin", "This is a test " + DateTime.Now.ToLongDateString() );
 
         }
     }

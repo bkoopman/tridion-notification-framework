@@ -37,11 +37,15 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tridion.ContentManager.CoreService.Client">
+      <HintPath>..\Reference Assemblies\Tridion.ContentManager.CoreService.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Twitterizer2, Version=2.4.1.32182, Culture=neutral, PublicKeyToken=69d1469eac671567, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ReferenceAssemblies\Twitterizer2.dll</HintPath>
@@ -60,6 +64,10 @@
     <ProjectReference Include="..\Tridion.Notification.Framework.Contracts\Tridion.Notification.Framework.Contracts.csproj">
       <Project>{773e8dea-de86-4554-bebd-8d4c0c2c19fc}</Project>
       <Name>Tridion.Notification.Framework.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkflowNotifier\WorkflowNotifier.csproj">
+      <Project>{5563ee73-2f6e-4362-8109-2df9a3155c6e}</Project>
+      <Name>WorkflowNotifier</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkMessageNotifierTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailNotifierTests", "EmailNotifierTests\EmailNotifierTests.csproj", "{B3B74BEC-46D0-43C8-9B6F-B7C4539239E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowNotifier", "WorkflowNotifier\WorkflowNotifier.csproj", "{5563EE73-2F6E-4362-8109-2DF9A3155C6E}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Notification Framework.vsmdi
@@ -59,6 +61,10 @@ Global
 		{B3B74BEC-46D0-43C8-9B6F-B7C4539239E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3B74BEC-46D0-43C8-9B6F-B7C4539239E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3B74BEC-46D0-43C8-9B6F-B7C4539239E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5563EE73-2F6E-4362-8109-2DF9A3155C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5563EE73-2F6E-4362-8109-2DF9A3155C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5563EE73-2F6E-4362-8109-2DF9A3155C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5563EE73-2F6E-4362-8109-2DF9A3155C6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

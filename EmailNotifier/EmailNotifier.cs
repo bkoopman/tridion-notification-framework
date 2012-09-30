@@ -1,83 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Threading;
-using Tridion.ContentManager.CoreService.Client;
-using System.Xml;
 using System.IO;
-using System.Xml.Linq;
+using System.Net.Mail;
+using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using Tridion.ContentManager.CoreService.Client;
 
 namespace TridionCommunity.NotificationFramework
 {
-    public class EmailNotifier : INotifier
+    public class EmailNotifier : WorkflowNotifier
     {
         private static string xslt = null;
 
-        public void Notify(NotificationData data)
-        {
-            var workflowData = data as WorkflowNotificationData;
-            if (workflowData != null)
-            {
-                Notify(workflowData.User, workflowData.WorkItems);
-            }
-        }
-
-        private void Notify(UserData userData, WorkItemData[] workItemData)
+        protected override void Notify(UserData userData, WorkItemData[] workItemData)
         {
 
-            XmlWriterSettings settings = new XmlWriterSettings()
-            {
-                Encoding = Encoding.UTF8, 
-                Indent = false,
-                OmitXmlDeclaration = false
-            };
-
-            XNode userDataNode = null;
-            XNode workItemDataNode = null;
-            //Serialize userData to XML
-            System.Xml.Serialization.XmlSerializer udSerializer = new System.Xml.Serialization.XmlSerializer(userData.GetType());           
-            using (StringWriter textWriter = new StringWriter())
-            {
-                using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
-                {
-                    udSerializer.Serialize(xmlWriter, userData);
-                }
-                userDataNode = XElement.Parse(textWriter.ToString()).DescendantNodesAndSelf().FirstOrDefault();
-            }
-
-            //Serialize WorkItemData[] to XML
-            System.Xml.Serialization.XmlSerializer wiSerializer = new System.Xml.Serialization.XmlSerializer(workItemData.GetType());
-            using (StringWriter textWriter = new StringWriter())
-            {
-                using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
-                {
-                    wiSerializer.Serialize(xmlWriter, workItemData);
-                }
-                workItemDataNode = XElement.Parse(textWriter.ToString()).DescendantNodesAndSelf().FirstOrDefault();
-            }
-           
-            XElement wfElement = new XElement("WorkflowInfo");
-            wfElement.Add(userDataNode);
-            wfElement.Add(workItemDataNode);
-
-            var xml = wfElement.ToString();
+            var xml = GetWorkflowDataXml(userData, workItemData);
             if (xslt == null)
             {
                 xslt = ""; //client.Read("tcm:7-159-2048", new ReadOptions()) as TemplateBuildingBlockData;
             }
-            //Transform
-            XPathDocument myXPathDoc = new XPathDocument(xml);
+ 
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
             myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));            
             using (StringWriter sr = new StringWriter())
             {
                 //Write the mailbody to the StringWriter
-                myXslTrans.Transform(myXPathDoc, null, sr);
+                myXslTrans.Transform( xml.CreateNavigator(), null, sr);
                     
                 SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
             }

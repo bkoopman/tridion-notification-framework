@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B3B74BEC-46D0-43C8-9B6F-B7C4539239E5}</ProjectGuid>
+    <ProjectGuid>{5563EE73-2F6E-4362-8109-2DF9A3155C6E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmailNotifierTests</RootNamespace>
-    <AssemblyName>EmailNotifierTests</AssemblyName>
+    <RootNamespace>WorkflowNotifier</RootNamespace>
+    <AssemblyName>WorkflowNotifier</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,23 +31,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tridion.ContentManager.CoreService.Client">
+      <HintPath>..\Reference Assemblies\Tridion.ContentManager.CoreService.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmailNotifierTests.cs" />
+    <Compile Include="WorkflowNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorkflowNotifier\WorkflowNotifier.csproj">
-      <Project>{5563ee73-2f6e-4362-8109-2df9a3155c6e}</Project>
-      <Name>WorkflowNotifier</Name>
+    <ProjectReference Include="..\Tridion.Notification.Framework.Contracts\Tridion.Notification.Framework.Contracts.csproj">
+      <Project>{773e8dea-de86-4554-bebd-8d4c0c2c19fc}</Project>
+      <Name>Tridion.Notification.Framework.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

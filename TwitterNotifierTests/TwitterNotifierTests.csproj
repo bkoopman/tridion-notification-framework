@@ -57,6 +57,10 @@
       <Project>{666c3684-65aa-4b18-9023-5a0fd2998b17}</Project>
       <Name>TwitterNotifier</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WorkflowNotifier\WorkflowNotifier.csproj">
+      <Project>{5563ee73-2f6e-4362-8109-2df9a3155c6e}</Project>
+      <Name>WorkflowNotifier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
