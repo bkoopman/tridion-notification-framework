@@ -11,6 +11,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml.Xsl;
+using TridionCommunity.NotificationFramework.ExtensionMethods;
 
 namespace TridionCommunity.NotificationFramework
 {
@@ -29,59 +30,34 @@ namespace TridionCommunity.NotificationFramework
 
         private void Notify(UserData userData, WorkItemData[] workItemData)
         {
+            //Serialize userData to XElement
+            var userDataNode = userData.SerializeToXElement().DescendantNodesAndSelf().FirstOrDefault();
 
-            XmlWriterSettings settings = new XmlWriterSettings()
-            {
-                Encoding = Encoding.UTF8, 
-                Indent = false,
-                OmitXmlDeclaration = false
-            };
+            //Serialize workitemData to XElement
+            var workItemDataNode = workItemData.SerializeToXElement().DescendantNodesAndSelf().FirstOrDefault();
 
-            XNode userDataNode = null;
-            XNode workItemDataNode = null;
-            //Serialize userData to XML
-            System.Xml.Serialization.XmlSerializer udSerializer = new System.Xml.Serialization.XmlSerializer(userData.GetType());           
-            using (StringWriter textWriter = new StringWriter())
-            {
-                using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
-                {
-                    udSerializer.Serialize(xmlWriter, userData);
-                }
-                userDataNode = XElement.Parse(textWriter.ToString()).DescendantNodesAndSelf().FirstOrDefault();
-            }
-
-            //Serialize WorkItemData[] to XML
-            System.Xml.Serialization.XmlSerializer wiSerializer = new System.Xml.Serialization.XmlSerializer(workItemData.GetType());
-            using (StringWriter textWriter = new StringWriter())
-            {
-                using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, settings))
-                {
-                    wiSerializer.Serialize(xmlWriter, workItemData);
-                }
-                workItemDataNode = XElement.Parse(textWriter.ToString()).DescendantNodesAndSelf().FirstOrDefault();
-            }
-           
-            XElement wfElement = new XElement("WorkflowInfo");
+            XElement wfElement = new XElement("WorkflowInfo");            
             wfElement.Add(userDataNode);
             wfElement.Add(workItemDataNode);
 
             var xml = wfElement.ToString();
             if (xslt == null)
             {
+                //Read XSLT from Tridion
                 xslt = ""; //client.Read("tcm:7-159-2048", new ReadOptions()) as TemplateBuildingBlockData;
             }
             //Transform
             XPathDocument myXPathDoc = new XPathDocument(xml);
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
-            myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));            
+            myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));
             using (StringWriter sr = new StringWriter())
             {
                 //Write the mailbody to the StringWriter
                 myXslTrans.Transform(myXPathDoc, null, sr);
-                    
+
                 SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
             }
-                  
+
         }
 
         private void SendMail(string mailTo, string mailFrom, string subject, string mailMessage)

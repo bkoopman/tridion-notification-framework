@@ -22,3 +22,6 @@ C:\proj\tridion-notification-framework\EmailNotifier\obj\Debug\TridionCommunity.
 C:\proj\tridion-notification-framework\EmailNotifier\obj\Debug\EmailNotifier.csproj.GenerateResource.Cache
 C:\proj\tridion-notification-framework\EmailNotifier\obj\Debug\EmailNotifier.dll
 C:\proj\tridion-notification-framework\EmailNotifier\obj\Debug\EmailNotifier.pdb
+C:\dev\EmailNotifier\EmailNotifier\obj\Debug\TridionCommunity.NotificationFramework.Properties.Resources.resources
+C:\dev\EmailNotifier\EmailNotifier\obj\Debug\GenerateResource.read.1.tlog
+C:\dev\EmailNotifier\EmailNotifier\obj\Debug\GenerateResource.write.1.tlog
