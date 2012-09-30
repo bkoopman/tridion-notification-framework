@@ -62,10 +62,6 @@ namespace NotificationService
                                     // hand that list, appdata, user ide, user desc & name to the notifier
                                 }
                             }
-
-                            client.GetCurrentUser();
-                            Logger.WriteToLog("here", EventLogEntryType.Warning);
-
                             var notificationData = new WorkflowNotificationData();
                             notificationData.ApplicationData = setting.ToString();
                             notificationData.User = client.GetCurrentUser();
