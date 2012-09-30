@@ -32,7 +32,7 @@ namespace NotificationService
                     }
                 case EventLogEntryType.Warning:
                     {
-                        if (logLevel == EventLogEntryType.Error | logLevel == EventLogEntryType.Warning)
+                        if (logLevel == EventLogEntryType.Information | logLevel == EventLogEntryType.Warning)
                         {
                             EventLog.WriteEntry(logName, message, entryType);
                         }
