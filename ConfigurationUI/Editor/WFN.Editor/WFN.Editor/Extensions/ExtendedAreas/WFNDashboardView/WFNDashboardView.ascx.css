@@ -1,0 +1,9 @@
+﻿.deck
+{
+    border: 0px;
+}
+
+.deck > .body > .page
+{
+    overflow:hidden;
+}

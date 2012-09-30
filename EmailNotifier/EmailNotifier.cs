@@ -73,17 +73,15 @@ namespace TridionCommunity.NotificationFramework
             //Transform
             XPathDocument myXPathDoc = new XPathDocument(xml);
             XslCompiledTransform myXslTrans = new XslCompiledTransform();
-            myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));
-            using (XmlTextWriter myWriter = new XmlTextWriter("result.html", null))
+            myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));            
+            using (StringWriter sr = new StringWriter())
             {
-                using (StringWriter sr = new StringWriter())
-                {
-                    //Write the mailbody to the StringWriter
-                    myXslTrans.Transform(myXPathDoc, null, sr);
+                //Write the mailbody to the StringWriter
+                myXslTrans.Transform(myXPathDoc, null, sr);
                     
-                    SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
-                }
-            }           
+                SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
+            }
+                  
         }
 
         private void SendMail(string mailTo, string mailFrom, string subject, string mailMessage)

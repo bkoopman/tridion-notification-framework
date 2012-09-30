@@ -48,19 +48,27 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tridion.ContentManager.CoreService.Client, Version=7.0.0.1489, Culture=neutral, PublicKeyToken=ddfc895746e5ee6b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Users\SRV-CMTASK\Desktop\Tridion.ContentManager.CoreService.Client.dll</HintPath>
+    <Reference Include="Tridion.ContentManager.CoreService.Client">
+      <HintPath>..\..\Reference Assemblies\Tridion.ContentManager.CoreService.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Tridion.Notification.Framework.Contracts">
+      <HintPath>..\..\Tridion.Notification.Framework.Contracts\bin\Debug\Tridion.Notification.Framework.Contracts.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreService\Client.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Notifiers.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Worker.cs" />
     <Compile Include="WorkflowNotificationService.cs">
@@ -75,6 +83,11 @@
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

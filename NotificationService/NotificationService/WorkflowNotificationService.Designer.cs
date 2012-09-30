@@ -36,10 +36,7 @@ namespace NotificationService
         /// </summary>
         private void InitializeComponent()
         {
-            // 
-            // WorkflowNotificationService
-            // 
-            this.ServiceName = "WorkflowNotificationService";
+            this.ServiceName = "Tridion Community Workflow Notification Service";
 
         }
 
