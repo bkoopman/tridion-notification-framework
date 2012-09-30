@@ -33,6 +33,7 @@ namespace NotificationServiceTests
         public void LoadFromInvalidLocation()
         {
             ConfigurationManager.AppSettings["notifiersFolder"] = "InvalidLocation";
+            
             try
             {
                 Notifiers.GetAll();

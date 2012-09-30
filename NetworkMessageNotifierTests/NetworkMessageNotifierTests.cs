@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NetworkMessageNotifierTests
@@ -7,10 +8,16 @@ namespace NetworkMessageNotifierTests
     public class NetworkMessageNotifierTests
     {
         [TestMethod]
-        public void SendMessageSuccess()
+        public void GetProcess()
         {
             var notifier = new TridionCommunity.NotificationFramework.NetworkMessageNotifier();
-            notifier.SendMessage(Environment.UserName, "This is a test from the unit test!");
+            const string userName = "Test\\TestUser";
+            const string message = "This is a test.";;
+
+            var process = notifier.GetProcess(userName, message);
+            Assert.AreEqual("msg.exe", process.StartInfo.FileName);
+            Assert.AreEqual(userName + " " + message, process.StartInfo.Arguments);
+            Assert.AreEqual((int)ProcessWindowStyle.Hidden, (int)process.StartInfo.WindowStyle);
         }
 
         [TestMethod]
