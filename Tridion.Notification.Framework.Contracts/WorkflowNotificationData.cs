@@ -4,7 +4,7 @@ namespace TridionCommunity.NotificationFramework
 {
     public class WorkflowNotificationData : NotificationData
     {
-        public UserData User { get; internal set; }
-        public WorkItemData[] WorkItems { get; internal set; }
+        public UserData User { get; set; }
+        public WorkItemData[] WorkItems { get; set; }
     }
 }
