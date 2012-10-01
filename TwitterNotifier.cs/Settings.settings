@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="TwitterOAuthAccessToken" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">851265757-wlqwhYZp5Wul9EieMfqKleRcKhxzWa3BYpR0zEl3</Value>
+      <Value Profile="(Default)">foo</Value>
     </Setting>
     <Setting Name="TwitterOAuthAccessTokenSecret" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">vgW4HVWj1KrDhZn0MiyIMv3McIDgvdusPa7VkNa6fg8</Value>
+      <Value Profile="(Default)">bar</Value>
     </Setting>
     <Setting Name="TwitterConsumerKey" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">gxYDq7zyusl70fqnly70Fg</Value>
+      <Value Profile="(Default)">wibble</Value>
     </Setting>
     <Setting Name="TwitterConsumerSecret" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">fYJwTv0wMg4i2gSNGZr6r3ZXp25d5rrL8bmN6uQUM</Value>
+      <Value Profile="(Default)">chunder</Value>
     </Setting>
   </Settings>
 </SettingsFile>

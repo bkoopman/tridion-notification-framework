@@ -2,6 +2,6 @@
 {
     public class NotificationData
     {
-        public string ApplicationData { get; internal set; }
+        public string ApplicationData { get; set; }
     }
 }

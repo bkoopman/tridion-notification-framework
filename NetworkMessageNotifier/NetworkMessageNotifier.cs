@@ -18,7 +18,16 @@ namespace TridionCommunity.NotificationFramework
 
         public void SendMessage(string userName, string message)
         {
-            var process = GetProcess(userName, message);
+            var process = new Process
+                        {
+                            StartInfo =
+                                {
+                                    FileName = "msg.exe",
+                                    Arguments = userName + " " + message,
+                                    WindowStyle = ProcessWindowStyle.Hidden
+                                }
+                        };
+
             process.Start();
             process.WaitForExit();
 
@@ -26,19 +35,6 @@ namespace TridionCommunity.NotificationFramework
             {
                 throw new Exception(string.Format(Resources.FailedToSendMessage, userName, process.ExitCode));
             }
-        }
-
-        internal Process GetProcess(string userName, string message)
-        {
-            return new Process
-            {
-                StartInfo =
-                {
-                    FileName = "msg.exe",
-                    Arguments = userName + " " + message,
-                    WindowStyle = ProcessWindowStyle.Hidden
-                }
-            };
         }
     }
 }

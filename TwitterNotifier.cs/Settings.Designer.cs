@@ -25,7 +25,7 @@ namespace TridionCommunity.NotificationFramework {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("851265757-wlqwhYZp5Wul9EieMfqKleRcKhxzWa3BYpR0zEl3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("foo")]
         public string TwitterOAuthAccessToken {
             get {
                 return ((string)(this["TwitterOAuthAccessToken"]));
@@ -34,7 +34,7 @@ namespace TridionCommunity.NotificationFramework {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("vgW4HVWj1KrDhZn0MiyIMv3McIDgvdusPa7VkNa6fg8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("bar")]
         public string TwitterOAuthAccessTokenSecret {
             get {
                 return ((string)(this["TwitterOAuthAccessTokenSecret"]));
@@ -43,7 +43,7 @@ namespace TridionCommunity.NotificationFramework {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("gxYDq7zyusl70fqnly70Fg")]
+        [global::System.Configuration.DefaultSettingValueAttribute("wibble")]
         public string TwitterConsumerKey {
             get {
                 return ((string)(this["TwitterConsumerKey"]));
@@ -52,7 +52,7 @@ namespace TridionCommunity.NotificationFramework {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fYJwTv0wMg4i2gSNGZr6r3ZXp25d5rrL8bmN6uQUM")]
+        [global::System.Configuration.DefaultSettingValueAttribute("chunder")]
         public string TwitterConsumerSecret {
             get {
                 return ((string)(this["TwitterConsumerSecret"]));
