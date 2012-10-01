@@ -58,6 +58,10 @@
       <Project>{773E8DEA-DE86-4554-BEBD-8D4C0C2C19FC}</Project>
       <Name>Tridion.Notification.Framework.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WorkflowNotifier\WorkflowNotifier.csproj">
+      <Project>{5563ee73-2f6e-4362-8109-2df9a3155c6e}</Project>
+      <Name>WorkflowNotifier</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

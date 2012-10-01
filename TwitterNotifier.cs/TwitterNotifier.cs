@@ -1,9 +1,10 @@
 ﻿using System;
+using Tridion.ContentManager.CoreService.Client;
 using Twitterizer;
 
 namespace TridionCommunity.NotificationFramework
 {
-    public class TwitterNotifier : INotifier
+    public class TwitterNotifier : WorkflowNotifier
     {
 
         public void Tweet(string targetUser, string status)
@@ -23,11 +24,10 @@ namespace TridionCommunity.NotificationFramework
             throw new NotificationFailedException(string.Format("Twitter response was not Success: {0}", tweetResponse.Content));
         }
 
-        public void Notify(NotificationData data)
+        protected override void Notify(UserData userData, WorkItemData[] workItemData)
         {
-            var workflowDataXml = GetWorkflowDataXml(userData, workItemData);
+            //var data.ApplicationData 
             throw new NotImplementedException();
-            
         }
     }
 
