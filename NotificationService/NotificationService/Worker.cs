@@ -67,8 +67,15 @@ namespace NotificationService
                             notificationData.User = client.GetCurrentUser();
                             notificationData.WorkItems = relevantWorkFlowDataItems.ToArray();                            
                             notifier.Notify(notificationData);
+
+                            settingNodes.SingleOrDefault(n => n.Name == "last_notfication_send").Value = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         }
                     }
+
+                    // Save update application data
+                    var appDataToBeUpdated = applicationDataElement.Value.Single(ad => ad.ApplicationId == "User_Preferences");                    
+                    appDataToBeUpdated.Data = ASCIIEncoding.ASCII.GetBytes(doc.ToString());
+                    client.SaveApplicationData(applicationDataElement.Key, new[] { appDataToBeUpdated });
                 }
                 client.Close();
             }
