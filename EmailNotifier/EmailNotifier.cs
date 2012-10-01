@@ -16,6 +16,7 @@ namespace TridionCommunity.NotificationFramework
         {
 
             var xml = GetWorkflowDataXml(userData, workItemData);
+            
             if (xslt == null)
             {
                 xslt = ""; //client.Read("tcm:7-159-2048", new ReadOptions()) as TemplateBuildingBlockData;
@@ -25,7 +26,6 @@ namespace TridionCommunity.NotificationFramework
             myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));            
             using (StringWriter sr = new StringWriter())
             {
-                //Write the mailbody to the StringWriter
                 myXslTrans.Transform( xml.CreateNavigator(), null, sr);
                     
                 SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
