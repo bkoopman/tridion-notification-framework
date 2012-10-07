@@ -16,7 +16,7 @@ namespace NotificationService
     {
         internal static void DoWork(List<INotifier> notifiers)
         {
-            // get a corservice client            
+            // get a coreservice client            
             var client = Client.GetCoreService();
             var users = client.GetSystemWideList(new UsersFilterData { BaseColumns = ListBaseColumns.IdAndTitle, IsPredefined = false });
             var userIds = users.Select(f => f.Id).Distinct().ToArray();
@@ -25,7 +25,7 @@ namespace NotificationService
 
             foreach (var notifier in notifiers)
             {
-                foreach (var applicationDataElement in applicationDatas) // basically fore each user
+                foreach (var applicationDataElement in applicationDatas) // basically foreach user
                 {
                     var doc = XDocument.Parse(ASCIIEncoding.ASCII.GetString(applicationDataElement.Value.Single(ad => ad.ApplicationId == "User_Preferences").Data));
                     var settings = doc.Descendants("email_settings"); // TODO: read node name from notifier
@@ -33,7 +33,7 @@ namespace NotificationService
                     {
                         var settingNodes = setting.Descendants();
                         var notificationFrequency = GetNotificationFrequency(settingNodes.SingleOrDefault(n => n.Name == "notification_frequency").Value);
-                        var lastNotificationTime = ParseDate(settingNodes.SingleOrDefault(n => n.Name == "last_notfication_send").Value);
+                        var lastNotificationTime = ParseDate(settingNodes.SingleOrDefault(n => n.Name == "last_notification_send").Value);
                         var nextNotificationCheckTime = lastNotificationTime.Add(notificationFrequency);
                         var pollingInterval = GetPollingInterval();
 
@@ -47,7 +47,7 @@ namespace NotificationService
                             UserWorkItemsFilterData userWorkItemsFilter = new UserWorkItemsFilterData();
                             userWorkItemsFilter.ActivityState = ActivityState.Started | ActivityState.Assigned;
 
-                            // get assignemnt and work list
+                            // get assignment and work list
                             IdentifiableObjectData[] workFlowItems = client.GetSystemWideList(userWorkItemsFilter);
 
                             IList<WorkItemData> relevantWorkFlowDataItems = new List<WorkItemData>();
@@ -68,7 +68,8 @@ namespace NotificationService
                             notificationData.WorkItems = relevantWorkFlowDataItems.ToArray();                            
                             notifier.Notify(notificationData);
 
-                            settingNodes.SingleOrDefault(n => n.Name == "last_notfication_send").Value = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                            settingNodes.SingleOrDefault(n => n.Name == "last_notification_send").Value 
+                                = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                         }
                     }
 

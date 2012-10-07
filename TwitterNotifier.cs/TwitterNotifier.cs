@@ -26,8 +26,8 @@ namespace TridionCommunity.NotificationFramework
 
         protected override void Notify(UserData userData, WorkItemData[] workItemData)
         {
-            //var data.ApplicationData 
-            throw new NotImplementedException();
+            var workflowDataXml = GetWorkflowDataXml(userData, workItemData);
+            
         }
     }
 
