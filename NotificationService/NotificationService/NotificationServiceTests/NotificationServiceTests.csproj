@@ -40,7 +40,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="Tridion.ContentManager.CoreService.Client, Version=6.1.0.996, Culture=neutral, PublicKeyToken=ddfc895746e5ee6b, processorArchitecture=MSIL" />
+    <Reference Include="Tridion.ContentManager.CoreService.Client, Version=6.1.0.996, Culture=neutral, PublicKeyToken=ddfc895746e5ee6b, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Reference Assemblies\Tridion.ContentManager.CoreService.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Tridion.Notification.Framework.Contracts">
       <HintPath>..\..\..\Tridion.Notification.Framework.Contracts\bin\Debug\Tridion.Notification.Framework.Contracts.dll</HintPath>
     </Reference>

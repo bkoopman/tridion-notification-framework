@@ -16,71 +16,84 @@ namespace NotificationService
     {
         internal static void DoWork(List<INotifier> notifiers)
         {
-            // get a coreservice client            
+            const string NOTIFICATION_FRAMEWORK_APPID = "code.google.com/p/tridion-notification-framework";
+            const string NOTIFICATION_FREQUENCY = "notification_frequency";
+            const string NOTIFICATION_LAST_SEND = "notification_last_send";
             var client = Client.GetCoreService();
             var users = client.GetSystemWideList(new UsersFilterData { BaseColumns = ListBaseColumns.IdAndTitle, IsPredefined = false });
             var userIds = users.Select(f => f.Id).Distinct().ToArray();
-            var applicationDatas = client.ReadApplicationDataForSubjectsIds(userIds, new[] { "User_Preferences" }).Where(a => a.Value.Length > 0);
-            Logger.WriteToLog(string.Format("{0} users with application data found", applicationDatas.Count()), EventLogEntryType.Information);
+            var userApplicationDataDict = client.ReadApplicationDataForSubjectsIds(userIds, new[] { NOTIFICATION_FRAMEWORK_APPID }).Where(a => a.Value.Length > 0);
+            // REVIEW - too much logging?
+            Logger.WriteToLog(string.Format("{0} users with application data found", userApplicationDataDict.Count()), EventLogEntryType.Information);
 
+
+            // <NotificationFramework> 
+            //     <Notifier type="WorkflowEmailNotifier"
+            //                notification_frequency="3D"
+            //                notification_last_send="2012-10-07T23:13Z">
+            //        <EmailAddress>punter@outfit.org</EmailAddress>
+            //    </Notifier>
+            //    <Notifier type="WorkflowTwitterNotifier"
+            //            notification_frequency="3D"
+            //            notification_last_send="2012-10-07T23:13Z">
+            //        <TwitterName>TridionLovingHackyGeek</TwitterName>
+            //    </Notifier>
+            //</NotificationFramework> 
+            var pollingInterval = GetPollingInterval();
             foreach (var notifier in notifiers)
             {
-                foreach (var applicationDataElement in applicationDatas) // basically foreach user
+                foreach (KeyValuePair<string, ApplicationData[]> userApplicationData in userApplicationDataDict) 
                 {
-                    var doc = XDocument.Parse(ASCIIEncoding.ASCII.GetString(applicationDataElement.Value.Single(ad => ad.ApplicationId == "User_Preferences").Data));
-                    var settings = doc.Descendants("email_settings"); // TODO: read node name from notifier
-                    foreach (var setting in settings)
+                    var user = (UserData)users.Single(u => u.Id == userApplicationData.Key);
+                    // REVIEW: The query expression is redundant, as we've asked the API for a filtered list.... 
+                    // Oh wait - we want it to barf if there are two?
+                    ApplicationData userNotificationApplicationData = userApplicationData.Value.Single(ad => ad.ApplicationId == NOTIFICATION_FRAMEWORK_APPID);
+                    string xmlData = Encoding.UTF8.GetString(userNotificationApplicationData.Data);
+                    var doc = XDocument.Parse(xmlData);
+                    var notifierElements = doc.Element("NotificationFramework").Elements("Notifier"); 
+                    foreach (var notifierElement in notifierElements)
                     {
-                        var settingNodes = setting.Descendants();
-                        var notificationFrequency = GetNotificationFrequency(settingNodes.SingleOrDefault(n => n.Name == "notification_frequency").Value);
-                        var lastNotificationTime = ParseDate(settingNodes.SingleOrDefault(n => n.Name == "last_notification_send").Value);
-                        var nextNotificationCheckTime = lastNotificationTime.Add(notificationFrequency);
-                        var pollingInterval = GetPollingInterval();
 
-                        // Check if it's time to check if notification is needed
-                        if (DateTime.Now.Subtract(nextNotificationCheckTime) > pollingInterval)
+                        var notificationFrequency = GetNotificationFrequency(notifierElement.Attribute(NOTIFICATION_FREQUENCY).Value);
+                        var lastNotificationAttribute = notifierElement.Attribute(NOTIFICATION_LAST_SEND);
+                        var lastNotificationTime = ParseDate(lastNotificationAttribute.Value);
+                        var nextNotificationCheckTime = lastNotificationTime.Add(notificationFrequency);                        
+
+                        bool notificationIsNeeded = DateTime.Now.ToUniversalTime().Subtract(nextNotificationCheckTime) > pollingInterval;
+                        if (notificationIsNeeded)
                         {
-                            Logger.WriteToLog(string.Format("Impersonating as {0}", users.Single(u => u.Id == applicationDataElement.Key).Title), EventLogEntryType.Information);
-                            client.Impersonate(users.Single(u => u.Id == applicationDataElement.Key).Title);
+                            Logger.WriteToLog(string.Format("Impersonating as {0}", user.Title), EventLogEntryType.Information);
+                            client.Impersonate(user.Title);
 
-                            // get the workflow items for the user
-                            UserWorkItemsFilterData userWorkItemsFilter = new UserWorkItemsFilterData();
-                            userWorkItemsFilter.ActivityState = ActivityState.Started | ActivityState.Assigned;
+                            // Could factor this out more to allow for creating other kinds of notification data 
+                            // than WorkflowNotificationData, but for now YAGNI
+                            WorkItemData[] relevantWorkFlowDataItems = GetUserWorkflowItems(client).Where(
+                                item => lastNotificationTime < item.VersionInfo.CreationDate).ToArray<WorkItemData>();
 
-                            // get assignment and work list
-                            IdentifiableObjectData[] workFlowItems = client.GetSystemWideList(userWorkItemsFilter);
-
-                            IList<WorkItemData> relevantWorkFlowDataItems = new List<WorkItemData>();
-
-                            // then if there is a task
-                            foreach (WorkItemData workItem in workFlowItems)
-                            {
-                                if (lastNotificationTime < workItem.VersionInfo.CreationDate)
-                                {
-                                    relevantWorkFlowDataItems.Add(workItem);
-                                    // add to list of things to push
-                                    // hand that list, appdata, user ide, user desc & name to the notifier
-                                }
-                            }
                             var notificationData = new WorkflowNotificationData();
-                            notificationData.ApplicationData = setting.ToString();
-                            notificationData.User = client.GetCurrentUser();
-                            notificationData.WorkItems = relevantWorkFlowDataItems.ToArray();                            
+                            notificationData.ApplicationData = notifierElement.ToString();
+                            notificationData.User = user;
+                            notificationData.WorkItems = relevantWorkFlowDataItems;                            
                             notifier.Notify(notificationData);
 
-                            settingNodes.SingleOrDefault(n => n.Name == "last_notification_send").Value 
-                                = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                            lastNotificationAttribute.Value = DateTime.Now.ToUniversalTime().ToString("u");
                         }
                     }
 
-                    // Save update application data
-                    var appDataToBeUpdated = applicationDataElement.Value.Single(ad => ad.ApplicationId == "User_Preferences");                    
-                    appDataToBeUpdated.Data = ASCIIEncoding.ASCII.GetBytes(doc.ToString());
-                    client.SaveApplicationData(applicationDataElement.Key, new[] { appDataToBeUpdated });
+                    userNotificationApplicationData.Data = Encoding.UTF8.GetBytes(doc.ToString());
+                    client.SaveApplicationData(userApplicationData.Key, new[] { userNotificationApplicationData });
                 }
                 client.Close();
             }
         }
+
+        private static WorkItemData[] GetUserWorkflowItems(SessionAwareCoreServiceClient client)
+        {
+            UserWorkItemsFilterData userWorkItemsFilter = new UserWorkItemsFilterData();
+            userWorkItemsFilter.ActivityState = ActivityState.Started | ActivityState.Assigned;
+            return ((IEnumerable<WorkItemData>)client.GetSystemWideList(userWorkItemsFilter)).ToArray<WorkItemData>();
+        }
+        
         private static TimeSpan GetNotificationFrequency(string value)
         {
             if (value.EndsWith("H"))
