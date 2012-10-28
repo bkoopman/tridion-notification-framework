@@ -11,11 +11,16 @@ namespace TridionCommunity.NotificationFramework
 {
     public class EmailNotifier : WorkflowNotifier
     {
+        //     <Notifier type="WorkflowEmailNotifier"
+        //                notification_frequency="3D"
+        //                notification_last_send="2012-10-07T23:13Z">
+        //        <EmailAddress>punter@outfit.org</EmailAddress>
+        //    </Notifier>
         private static string xslt = null;
 
         protected override void Notify(UserData userData, WorkItemData[] workItemData, XElement applicationData)
         {
-
+            string emailaddress = applicationData.Element("Notifier").Element("EmailAddress").Value;
             var xml = GetWorkflowDataXml(userData, workItemData, applicationData);
             
             if (xslt == null)
@@ -28,8 +33,8 @@ namespace TridionCommunity.NotificationFramework
             using (StringWriter sr = new StringWriter())
             {
                 myXslTrans.Transform( xml.CreateNavigator(), null, sr);
-                    
-                SendMail("you@domain.com", "asdf@asf.com", "Yeah", sr.ToString());
+
+                SendMail(emailaddress, "asdf@asf.com", "Tridion Community Email notifier", sr.ToString());
             }
                   
         }
@@ -64,6 +69,9 @@ namespace TridionCommunity.NotificationFramework
             }
         }
 
-        
+        public sealed override string[] GetSupportedNotifierTypes()
+        {
+            return new string[] { "WorkflowEmailNotifier" };
+        }        
     }
 }
