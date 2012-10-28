@@ -16,6 +16,11 @@ namespace TridionCommunity.NotificationFramework
             SendMessage(userName, message);
         }
 
+        public string[] GetSupportedNotifierTypes()
+        {
+            return null;
+        }
+
         public void SendMessage(string userName, string message)
         {
             var process = new Process

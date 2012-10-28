@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 using Tridion.ContentManager.CoreService.Client;
 using Twitterizer;
 
@@ -6,7 +7,11 @@ namespace TridionCommunity.NotificationFramework
 {
     public class TwitterNotifier : WorkflowNotifier
     {
-
+        //    <Notifier type="WorkflowTwitterNotifier"
+        //            notification_frequency="3D"
+        //            notification_last_send="2012-10-07T23:13Z">
+        //        <TwitterName>TridionLovingHackyGeek</TwitterName>
+        //    </Notifier>
         public void Tweet(string targetUser, string status)
         {
             OAuthTokens tokens = new OAuthTokens();
@@ -24,10 +29,17 @@ namespace TridionCommunity.NotificationFramework
             throw new NotificationFailedException(string.Format("Twitter response was not Success: {0}", tweetResponse.Content));
         }
 
-        protected override void Notify(UserData userData, WorkItemData[] workItemData)
+        protected override void Notify(UserData userData, WorkItemData[] workItemData, XElement applicationData)
         {
-            var workflowDataXml = GetWorkflowDataXml(userData, workItemData);
-            
+            var workflowDataXml = GetWorkflowDataXml(userData, workItemData, applicationData );
+            string twitterName = applicationData.Element("Notifier").Element("TwitterName").Value;
+            // TODO 
+            Tweet(twitterName, "You have something in your workflow queue");
+        }
+
+        public sealed override string[] GetSupportedNotifierTypes()
+        {
+            return new string[] { "WorkflowTwitterNotifier" };
         }
     }
 

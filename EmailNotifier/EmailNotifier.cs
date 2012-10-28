@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net.Mail;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using Tridion.ContentManager.CoreService.Client;
@@ -12,10 +13,10 @@ namespace TridionCommunity.NotificationFramework
     {
         private static string xslt = null;
 
-        protected override void Notify(UserData userData, WorkItemData[] workItemData)
+        protected override void Notify(UserData userData, WorkItemData[] workItemData, XElement applicationData)
         {
 
-            var xml = GetWorkflowDataXml(userData, workItemData);
+            var xml = GetWorkflowDataXml(userData, workItemData, applicationData);
             
             if (xslt == null)
             {

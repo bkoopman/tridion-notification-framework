@@ -17,16 +17,23 @@ namespace TridionCommunity.NotificationFramework
 
         public void Notify(NotificationData data)
         {
+            XElement applicationData = XElement.Parse(data.ApplicationData);
+            if (!NotifierTypeIsSupported(applicationData)) return;
             var workflowData = data as WorkflowNotificationData;
             if (workflowData != null)
             {
-                Notify(workflowData.User, workflowData.WorkItems);
+                Notify(workflowData.User, workflowData.WorkItems, applicationData);
             }
         }
 
-        protected abstract void Notify(UserData userData, WorkItemData[] workItemData);
+        protected abstract void Notify(UserData userData, WorkItemData[] workItemData, XElement applicationData);
 
-        protected XElement GetWorkflowDataXml(UserData userData, WorkItemData[] workItemData)
+        public virtual string[] GetSupportedNotifierTypes() 
+        {
+            return null;
+        }
+
+        protected XElement GetWorkflowDataXml(UserData userData, WorkItemData[] workItemData, XElement applicationData)
         {
             //Serialize userData to XElement
             var userDataNode = userData.SerializeToXElement().DescendantNodesAndSelf().FirstOrDefault();
@@ -37,9 +44,28 @@ namespace TridionCommunity.NotificationFramework
             XElement wfElement = new XElement("WorkflowInfo");
             wfElement.Add(userDataNode);
             wfElement.Add(workItemDataNode);
+            wfElement.Add(applicationData);
 
             return wfElement;
 
+        }
+
+        protected bool NotifierTypeIsSupported(XElement notifierElement){
+            string[] supportedTypes = GetSupportedNotifierTypes();
+            if (supportedTypes == null)
+            {
+                return true;
+            }
+            else
+            {                
+                string type = notifierElement.Element("Notifier").Attribute("type").Value;
+                if (supportedTypes.Contains(type))
+                {
+                    return true;
+                }
+                return false;
+            }
+            
         }
     }
 }
