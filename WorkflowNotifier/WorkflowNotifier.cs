@@ -17,7 +17,7 @@ namespace TridionCommunity.NotificationFramework
 
         public void Notify(NotificationData data)
         {
-            XElement applicationData = XElement.Parse(data.ApplicationData);
+            var applicationData = XElement.Parse(data.ApplicationData);
             if (!NotifierTypeIsSupported(applicationData)) return;
             var workflowData = data as WorkflowNotificationData;
             if (workflowData != null)
@@ -58,12 +58,8 @@ namespace TridionCommunity.NotificationFramework
             }
             else
             {                
-                string type = notifierElement.Element("Notifier").Attribute("type").Value;
-                if (supportedTypes.Contains(type))
-                {
-                    return true;
-                }
-                return false;
+                var type = notifierElement.Element("Notifier").Attribute("type").Value;
+                return supportedTypes.Contains(type);
             }
             
         }

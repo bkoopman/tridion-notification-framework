@@ -20,7 +20,7 @@ namespace TridionCommunity.NotificationFramework
 
         protected override void Notify(UserData userData, WorkItemData[] workItemData, XElement applicationData)
         {
-            string emailaddress = applicationData.Element("Notifier").Element("EmailAddress").Value;
+            var emailaddress = applicationData.Element("Notifier").Element("EmailAddress").Value;
             var xml = GetWorkflowDataXml(userData, workItemData, applicationData);
             
             if (xslt == null)
@@ -28,9 +28,9 @@ namespace TridionCommunity.NotificationFramework
                 xslt = ""; //client.Read("tcm:7-159-2048", new ReadOptions()) as TemplateBuildingBlockData;
             }
  
-            XslCompiledTransform myXslTrans = new XslCompiledTransform();
+            var myXslTrans = new XslCompiledTransform();
             myXslTrans.Load(new XmlTextReader(new StringReader(xslt)));            
-            using (StringWriter sr = new StringWriter())
+            using (var sr = new StringWriter())
             {
                 myXslTrans.Transform( xml.CreateNavigator(), null, sr);
 
@@ -42,12 +42,12 @@ namespace TridionCommunity.NotificationFramework
         private void SendMail(string mailTo, string mailFrom, string subject, string mailMessage)
         {
 
-            using (MailMessage mail = new MailMessage(mailFrom, mailTo))
+            using (var mail = new MailMessage(mailFrom, mailTo))
             {
                 mail.Subject = subject;
                 mail.Body = mailMessage;
 
-                using (SmtpClient smtp = new SmtpClient())
+                using (var smtp = new SmtpClient())
                 {
                     try
                     {

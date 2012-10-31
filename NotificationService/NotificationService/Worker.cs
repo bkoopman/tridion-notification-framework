@@ -1,4 +1,5 @@
-﻿using NotificationService.CoreService;
+﻿using System.Runtime.Serialization;
+using NotificationService.CoreService;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -48,7 +49,7 @@ namespace NotificationService
                     // REVIEW: The query expression is redundant, as we've asked the API for a filtered list.... 
                     // Oh wait - we want it to barf if there are two?
                     ApplicationData userNotificationApplicationData = userApplicationData.Value.Single(ad => ad.ApplicationId == NOTIFICATION_FRAMEWORK_APPID);
-                    string xmlData = Encoding.UTF8.GetString(userNotificationApplicationData.Data);
+                    string xmlData = Encoding.Unicode.GetString(userNotificationApplicationData.Data);
                     var doc = XDocument.Parse(xmlData);
                     var notifierElements = doc.Element("NotificationFramework").Elements("Notifier"); 
                     foreach (var notifierElement in notifierElements)
@@ -67,8 +68,9 @@ namespace NotificationService
 
                             // Could factor this out more to allow for creating other kinds of notification data 
                             // than WorkflowNotificationData, but for now YAGNI
-                            WorkItemData[] relevantWorkFlowDataItems = GetUserWorkflowItems(client).Where(
-                                item => lastNotificationTime < item.VersionInfo.CreationDate).ToArray<WorkItemData>();
+                            // TODO: Do we check the CreationDate of the right subject???
+                            var relevantWorkFlowDataItems = GetUserWorkflowItems(client).Where(
+                                item => lastNotificationTime < client.Read(item.Subject.IdRef, null).VersionInfo.CreationDate).ToArray<WorkItemData>();
 
                             var notificationData = new WorkflowNotificationData();
                             notificationData.ApplicationData = notifierElement.ToString();
@@ -89,9 +91,14 @@ namespace NotificationService
 
         private static WorkItemData[] GetUserWorkflowItems(SessionAwareCoreServiceClient client)
         {
-            UserWorkItemsFilterData userWorkItemsFilter = new UserWorkItemsFilterData();
-            userWorkItemsFilter.ActivityState = ActivityState.Started | ActivityState.Assigned;
-            return ((IEnumerable<WorkItemData>)client.GetSystemWideList(userWorkItemsFilter)).ToArray<WorkItemData>();
+            var userWorkItemsFilter = new UserWorkItemsFilterData()
+                                          {
+                                              ActivityState = ActivityState.Started | ActivityState.Assigned,                                               
+                                          };
+                    
+            var workItemDataList = new List<WorkItemData>();
+            client.GetSystemWideList(userWorkItemsFilter).ToList().ForEach(idObject => workItemDataList.Add(idObject as WorkItemData));  
+            return workItemDataList.ToArray();            
         }
         
         private static TimeSpan GetNotificationFrequency(string value)
