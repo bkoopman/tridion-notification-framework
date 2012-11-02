@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
+using System.Net;
 using System.Net.Mail;
 using System.Xml;
 using System.Xml.Linq;
@@ -20,12 +22,20 @@ namespace TridionCommunity.NotificationFramework
 
         protected override void Notify(UserData userData, WorkItemData[] workItemData, XElement applicationData)
         {
-            var emailaddress = applicationData.Element("Notifier").Element("EmailAddress").Value;
+            var emailaddress = applicationData.Element("EmailAddress").Value;
             var xml = GetWorkflowDataXml(userData, workItemData, applicationData);
             
             if (xslt == null)
             {
-                xslt = ""; //client.Read("tcm:7-159-2048", new ReadOptions()) as TemplateBuildingBlockData;
+                using (var client = new SessionAwareCoreServiceClient("wsHttp_2011")) //TODO: Refactor
+                {
+                    
+                    client.Impersonate(userData.Title);
+                    var xsltBody =
+                        client.Read(ConfigurationManager.AppSettings.Get("EmailNotifier.TcmIdXslt"), new ReadOptions())
+                        as TemplateBuildingBlockData;
+                    xslt = xsltBody.Content;
+                }
             }
  
             var myXslTrans = new XslCompiledTransform();
@@ -34,7 +44,7 @@ namespace TridionCommunity.NotificationFramework
             {
                 myXslTrans.Transform( xml.CreateNavigator(), null, sr);
 
-                SendMail(emailaddress, "asdf@asf.com", "Tridion Community Email notifier", sr.ToString());
+                SendMail(emailaddress, ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpUsername") , "Tridion Community Email notifier", sr.ToString());
             }
                   
         }
@@ -46,8 +56,21 @@ namespace TridionCommunity.NotificationFramework
             {
                 mail.Subject = subject;
                 mail.Body = mailMessage;
+                
+                var host = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpHost");
+                var userName = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpUsername");
+                var password = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpPassword");
+                var port = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpPort");
 
-                using (var smtp = new SmtpClient())
+                using (var smtp = new SmtpClient()
+                                      {
+                                          Host =  host,
+                                          Credentials = new NetworkCredential(userName, password),
+                                          DeliveryMethod = SmtpDeliveryMethod.Network,
+                                          Port = Int16.Parse(port)
+                                      }
+                    
+                    )
                 {
                     try
                     {

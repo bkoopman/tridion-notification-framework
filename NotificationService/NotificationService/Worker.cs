@@ -49,7 +49,7 @@ namespace NotificationService
                     // REVIEW: The query expression is redundant, as we've asked the API for a filtered list.... 
                     // Oh wait - we want it to barf if there are two?
                     ApplicationData userNotificationApplicationData = userApplicationData.Value.Single(ad => ad.ApplicationId == NOTIFICATION_FRAMEWORK_APPID);
-                    string xmlData = Encoding.Unicode.GetString(userNotificationApplicationData.Data);
+                    string xmlData = Encoding.UTF8.GetString(userNotificationApplicationData.Data);
                     var doc = XDocument.Parse(xmlData);
                     var notifierElements = doc.Element("NotificationFramework").Elements("Notifier"); 
                     foreach (var notifierElement in notifierElements)
@@ -72,10 +72,13 @@ namespace NotificationService
                             var relevantWorkFlowDataItems = GetUserWorkflowItems(client).Where(
                                 item => lastNotificationTime < client.Read(item.Subject.IdRef, null).VersionInfo.CreationDate).ToArray<WorkItemData>();
 
-                            var notificationData = new WorkflowNotificationData();
-                            notificationData.ApplicationData = notifierElement.ToString();
-                            notificationData.User = user;
-                            notificationData.WorkItems = relevantWorkFlowDataItems;                            
+                            var notificationData = new WorkflowNotificationData()
+                                                       {
+                                                           ApplicationData = notifierElement.ToString(),
+                                                           User = user,
+                                                           WorkItems = relevantWorkFlowDataItems
+                                                       };
+                            
                             notifier.Notify(notificationData);
 
                             lastNotificationAttribute.Value = DateTime.Now.ToUniversalTime().ToString("u");
@@ -125,7 +128,7 @@ namespace NotificationService
 
         private static DateTime ParseDate(string stringDate)
         {
-            return DateTime.Parse(stringDate, CultureInfo.InvariantCulture);
+            return DateTime.Parse(stringDate, CultureInfo.InvariantCulture).ToUniversalTime();
         }
 
         private static TimeSpan GetPollingInterval()

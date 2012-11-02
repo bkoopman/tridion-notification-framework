@@ -58,7 +58,7 @@ namespace TridionCommunity.NotificationFramework
             }
             else
             {                
-                var type = notifierElement.Element("Notifier").Attribute("type").Value;
+                var type = notifierElement.Attribute("type").Value;
                 return supportedTypes.Contains(type);
             }
             
