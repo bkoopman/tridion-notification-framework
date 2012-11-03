@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IO;
 using System.Net;
+using System.Net.Configuration;
 using System.Net.Mail;
 using System.Xml;
 using System.Xml.Linq;
@@ -44,7 +45,12 @@ namespace TridionCommunity.NotificationFramework
             {
                 myXslTrans.Transform( xml.CreateNavigator(), null, sr);
 
-                SendMail(emailaddress, ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpUsername") , "Tridion Community Email notifier", sr.ToString());
+                //Read mailFrom from mail-settings in App.Config
+                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                var mailSettings = config.GetSectionGroup("system.net/mailSettings")as MailSettingsSectionGroup;
+
+                SendMail(emailaddress, mailSettings.Smtp.Network.UserName , "Tridion Community Email notifier", sr.ToString());
+                
             }
                   
         }
@@ -57,21 +63,8 @@ namespace TridionCommunity.NotificationFramework
                 mail.Subject = subject;
                 mail.Body = mailMessage;
                 
-                var host = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpHost");
-                var userName = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpUsername");
-                var password = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpPassword");
-                var port = ConfigurationManager.AppSettings.Get("EmailNotifier.SmtpPort");
-
-                using (var smtp = new SmtpClient()
-                                      {
-                                          Host =  host,
-                                          Credentials = new NetworkCredential(userName, password),
-                                          DeliveryMethod = SmtpDeliveryMethod.Network,
-                                          Port = Int16.Parse(port)
-                                      }
-                    
-                    )
-                {
+               using (var smtp = new SmtpClient())
+               {
                     try
                     {
                         smtp.Send(mail);
